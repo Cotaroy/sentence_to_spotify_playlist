@@ -9,7 +9,7 @@ from spotipy import Spotify
 from spotipy.oauth2 import SpotifyOAuth
 from spotipy.cache_handler import FlaskSessionCacheHandler
 
-from word_manipulation import return_closest, merge_filler
+from word_manipulation import return_closest, merge_filler, strip_sentence_to_space
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(64)
@@ -74,7 +74,8 @@ def create_playlist(sentence: str):
         description=f'We tried to build the sentence: {sentence}'
     )
     playlist_id = playlist['id']
-    sentence_split = sentence.split()
+    sentence_stripped = strip_sentence_to_space(sentence)
+    sentence_split = sentence_stripped.split()
 
     sentence_split = merge_filler(sentence_split)
     song_ids = search_spotify(sentence_split)

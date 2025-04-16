@@ -5,7 +5,19 @@ Contains methods that manipulate words
 from thefuzz import fuzz
 FILLER_WORDS = {'THE', 'A', 'AN', 'LIKE', 'LIKES', 'BUT',
                 'HE', 'HIM', 'HIS', 'SHE', 'HER', 'HERS'
-                'I', 'YOU', 'US', 'WE', 'OURS', 'YOURS'}
+                'I', 'YOU', 'US', 'WE', 'OURS', 'YOURS', 'TO'}
+STRIP = {'-', '/', '"', "'", '~'}
+
+
+def strip_sentence_to_space(sentence: str) -> str:
+    """remove characters in sentence that are in strip"""
+    new = ''
+    for i in range(len(sentence)):
+        if sentence[i] in STRIP:
+            new += ' '
+        else:
+            new += sentence[i]
+    return new
 
 
 def merge_filler(words: list[str]) -> list[str]:
@@ -16,14 +28,14 @@ def merge_filler(words: list[str]) -> list[str]:
     ['the ball', 'likes turtles']
     >>> merge_filler(['the', 'a', 'her', 'mom'])
     ['the a her mom']
+    >>> check = "The stars whispered secrets to the night."
+    >>> merge_filler(check.split(' '))
+    ['The stars', 'whispered', 'secrets', 'to the night.']
     """
     if len(words) < 2:
         return words
 
-    for j in range(len(words)):
-        word = words[j].split(' ')
-        if not any([x.upper() not in FILLER_WORDS for x in word]):
-            break
+    if _merge_filler_verify(words):
         return words
 
     i = 0
@@ -38,6 +50,15 @@ def merge_filler(words: list[str]) -> list[str]:
             new.append(words[i])
         i += 1
     return merge_filler(new)
+
+
+def _merge_filler_verify(words: list[str]) -> bool:
+    """verify base case"""
+    for j in range(len(words)):
+        word = words[j].split(' ')
+        if not any([x.upper() not in FILLER_WORDS for x in word]):
+            return False
+    return True
 
 
 def return_closest(target: str, matches: list[str]) -> int:

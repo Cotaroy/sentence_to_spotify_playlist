@@ -9,3 +9,9 @@ SETUP:
   - in creds.py change client_secret to the Client Secret for your app
 - in the User Management Tab
   - add the email account(s) you will be using to User Management
+
+RUNNING:
+- run main.py
+
+CONFIG:
+- you can change FILLER_WORDS in word_manipulation.py

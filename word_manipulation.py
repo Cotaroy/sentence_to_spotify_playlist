@@ -5,7 +5,8 @@ Contains methods that manipulate words
 from thefuzz import fuzz
 FILLER_WORDS = {'THE', 'A', 'AN', 'LIKE', 'LIKES', 'BUT',
                 'HE', 'HIM', 'HIS', 'SHE', 'HER', 'HERS'
-                'I', 'YOU', 'US', 'WE', 'OURS', 'YOURS', 'TO'}
+                'I', 'US', 'WE', 'OURS', 'YOURS', 'TO',
+                'IS', 'ARE'}
 STRIP = {'-', '/', '"', "'", '~'}
 
 
